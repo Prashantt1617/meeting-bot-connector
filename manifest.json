@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Meeting Bot Connector",
+  "version": "1.0.0",
+  "description": "Allows users to link their Google Meet session with Convrse AI to generate meeting notes after explicit user action.",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/*",
+    "https://api.floorselector.convrse.ai/*",
+    "https://notetaker.convrse.ai/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Connect Bot"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/*.woff2"
+      ],
+      "matches": [
+        "https://meet.google.com/*"
+      ]
+    }
+  ]
+}
