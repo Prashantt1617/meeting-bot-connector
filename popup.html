@@ -1,163 +1,372 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --google-blue: #1a73e8;
+      --google-red: #ea4335;
+      --google-yellow: #fbbc04;
+      --google-green: #34a853;
+      --surface: #ffffff;
+      --background: #f8f9fa;
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --border-color: #dadce0;
+    }
+
     body {
-      width: 320px;
-      padding: 16px;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      color: #202124;
+      width: 380px;
+      padding: 0;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text-primary);
       margin: 0;
+      background: var(--background);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(26, 115, 232, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(52, 168, 83, 0.05) 0%, transparent 20%);
+    }
+
+    .container {
+      background: var(--surface);
+      box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+      border-radius: 24px;
+      margin: 16px;
+      padding: 24px;
     }
 
     .hidden {
       display: none !important;
     }
 
-    h2 {
-      margin: 0 0 16px 0;
-      font-size: 16px;
-      font-weight: 500;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e8eaed;
     }
 
-    .btn {
-      width: 100%;
-      padding: 10px;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .avatar-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .status-indicator {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--google-green);
+    }
+
+    .title-section h2 {
+      margin: 0 0 4px 0;
+      font-family: 'Product Sans', 'Roboto', sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+    }
+
+    .session-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .status-dot-small {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--google-blue);
+    }
+
+    .status-text {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--google-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-title {
+      font-family: 'Product Sans', 'Roboto', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0 0 8px 0;
+    }
+
+    .section-description {
       font-size: 14px;
-      transition: background-color 0.2s;
-    }
-
-    .btn:hover {
-      background-color: #1557b0;
-    }
-
-    .btn:disabled {
-      background-color: #dadce0;
-      color: #80868b;
-      cursor: not-allowed;
-    }
-
-    .btn-secondary {
-      background-color: white;
-      color: #1a73e8;
-      border: 1px solid #dadce0;
-      font-weight: 500;
-    }
-
-    .btn-secondary:hover {
-      background-color: #f8f9fa;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 4px;
-      border: 1px solid #dadce0;
-      font-family: inherit;
-      box-sizing: border-box;
-    }
-
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: #1a73e8;
-    }
-
-    #status-display,
-    #login-error {
-      margin-top: 12px;
-      font-weight: 500;
-      font-size: 13px;
-      text-align: center;
-      min-height: 20px;
-    }
-
-    #login-error {
-      color: red;
-      display: none;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.5;
     }
 
     .info-box {
       background: #f1f3f4;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      color: #5f6368;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
       text-align: center;
+      line-height: 1.5;
     }
 
-    .logout-container {
-      margin-top: 20px;
-      padding-top: 10px;
-      border-top: 1px solid #eee;
-      text-align: center;
-    }
-
-    .logout-btn {
-      background: none;
-      border: none;
-      color: #5f6368;
-      font-size: 12px;
-      cursor: pointer;
-      text-decoration: underline;
+    .form-group {
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
       margin-bottom: 6px;
-      font-size: 12px;
+      font-family: 'Product Sans', 'Roboto', sans-serif;
+      font-size: 13px;
       font-weight: 500;
-      color: #5f6368;
+      color: var(--text-primary);
+      padding-left: 4px;
     }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 0;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--google-blue);
+      box-shadow: 0 0 0 1px var(--google-blue);
+    }
+
+    input::placeholder {
+      color: #80868b;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 24px;
+      background-color: var(--google-blue);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: 'Product Sans', 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(26, 115, 232, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background-color: #1557b0;
+      box-shadow: 0 4px 8px rgba(26, 115, 232, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      background-color: var(--border-color);
+      color: #80868b;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    #status-display,
+    #login-error {
+      margin-top: 16px;
+      font-weight: 400;
+      font-size: 14px;
+      text-align: center;
+      min-height: 24px;
+    }
+
+    #login-error {
+      color: var(--google-red);
+      background: rgba(234, 67, 53, 0.1);
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(234, 67, 53, 0.2);
+      display: none;
+    }
+
+    .status.success {
+      color: var(--google-green);
+    }
+
+    .status.error {
+      color: var(--google-red);
+    }
+
+    .status.info {
+      color: var(--google-blue);
+    }
+
+    .divider {
+      margin: 20px 0;
+      border-top: 1px solid #e8eaed;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      transition: color 0.2s;
+      width: 100%;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .logout-btn:hover {
+      color: var(--google-red);
+    }
+
+    .google-colors {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+      margin-top: 20px;
+    }
+
+    .color-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+    }
+
+    .color-dot.blue { background: var(--google-blue); }
+    .color-dot.red { background: var(--google-red); }
+    .color-dot.yellow { background: var(--google-yellow); }
+    .color-dot.green { background: var(--google-green); }
   </style>
 </head>
 
 <body>
-  <h2>Meeting Bot Connector</h2>
-
-  <!-- State: No Meet -->
-  <div id="no-meet" class="hidden">
-    <div class="info-box">
-      Open a Google Meet session to connect the bot.
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="avatar">
+        <img src="logo.png" alt="AI Companion" class="avatar-logo" />
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+        </div>
+      </div>
+      <div class="title-section">
+        <h2>AI Companion</h2>
+      </div>
     </div>
-    <a href="https://meet.google.com/" target="_blank" class="btn"
-      style="display:block; text-align:center; text-decoration:none; box-sizing:border-box;">Open Google Meet</a>
-  </div>
 
-  <!-- State: Login Form -->
-  <div id="login-section" class="hidden">
-    <div class="info-box">
-      Please log in to access your projects.
+    <!-- State: No Meet -->
+    <div id="no-meet" class="hidden">
+      <h3 class="section-title">Welcome to AI Companion</h3>
+      <p class="section-description">Open a Google Meet session to connect the bot and start your meeting assistant.</p>
+      <a href="https://meet.google.com/" target="_blank" class="btn" style="text-decoration: none;">
+        <span>Open Google Meet</span>
+        <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+      </a>
     </div>
-    <form id="login-form">
-      <input type="email" id="login-email" placeholder="Email" required />
-      <input type="password" id="login-password" placeholder="Password" required />
-      <button type="submit" id="login-btn" class="btn">Sign In</button>
-    </form>
-    <div id="login-error"></div>
-  </div>
 
-  <!-- State: Main Interface -->
-  <div id="main-interface" class="hidden">
-    <label for="project-select">Select Customer Project</label>
-    <select id="project-select">
-      <option value="" disabled selected>Loading projects...</option>
-    </select>
+    <!-- State: Login Form -->
+    <div id="login-section" class="hidden">
+      <h3 class="section-title">Let's get you connected!</h3>
+      <p class="section-description">Enter your details below to login and start your personal assistant session.</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email address</label>
+          <input type="email" id="login-email" placeholder="name@company.com" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Security Passcode</label>
+          <input type="password" id="login-password" placeholder="Enter your code" required />
+        </div>
+        <button type="submit" id="login-btn" class="btn">
+          <span>LOGIN</span>
+        </button>
+        <div id="login-error"></div>
+      </form>
+    </div>
 
-    <button id="btn-connect" class="btn">Connect Bot</button>
-    <div id="status-display"></div>
+    <!-- State: Main Interface -->
+    <div id="main-interface" class="hidden">
+      <h3 class="section-title">Select Customer Project</h3>
+      <p class="section-description">Choose a project to connect the bot to this meeting.</p>
+      
+      <div class="form-group">
+        <label for="project-select">Project</label>
+        <select id="project-select">
+          <option value="" disabled selected>Loading projects...</option>
+        </select>
+      </div>
 
-    <div class="logout-container">
+      <button id="btn-connect" class="btn">
+        <span>CONNECT BOT</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="currentColor" d="M3.9 12a5 5 0 0 1 1.46-3.54l2.83-2.83a5 5 0 0 1 7.07 0 1 1 0 1 1-1.42 1.42 3 3 0 0 0-4.24 0L6.77 9.29A3 3 0 0 0 6 12a3 3 0 0 0 .88 2.12 1 1 0 0 1-1.42 1.42A5 5 0 0 1 3.9 12zm6.75 5.37a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07 1 1 0 0 0 1.42 1.42 3 3 0 0 1 4.24 4.24l-2.83 2.83a3 3 0 0 1-4.24-4.24 1 1 0 0 0-1.42-1.42 5 5 0 0 0 0 7.07z"/>
+        </svg>
+      </button>
+      
+      <div id="status-display" class="status"></div>
+
+      <div class="divider"></div>
+      
       <button id="btn-logout" class="logout-btn">Log out</button>
     </div>
   </div>

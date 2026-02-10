@@ -38,7 +38,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "fonts/*.woff2"
+        "fonts/*.woff2",
+        "logo.png"
       ],
       "matches": [
         "https://meet.google.com/*"

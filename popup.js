@@ -56,7 +56,8 @@ function setupLoginForm(meetUrl) {
 
         errorDiv.style.display = 'none';
         loginBtn.disabled = true;
-        loginBtn.textContent = 'Signing in...';
+        const btnText = loginBtn.querySelector('span:first-child');
+        if (btnText) btnText.textContent = 'SIGNING IN...';
 
         chrome.runtime.sendMessage({
             action: 'login',
@@ -64,7 +65,7 @@ function setupLoginForm(meetUrl) {
             password
         }, (response) => {
             loginBtn.disabled = false;
-            loginBtn.textContent = 'Sign In';
+            if (btnText) btnText.textContent = 'LOGIN';
 
             if (response && response.success) {
                 document.getElementById('login-section').classList.add('hidden');
@@ -119,7 +120,9 @@ async function setupMainInterface(auth, meetUrl) {
         chrome.storage.local.set({ lastProjectId: customerId });
 
         connectBtn.disabled = true;
-        updateStatus('Connecting Bot...', '#1a73e8');
+        const btnText = connectBtn.querySelector('span:first-child');
+        if (btnText) btnText.textContent = 'CONNECTING...';
+        updateStatus('Connecting bot...', 'info');
 
         chrome.runtime.sendMessage({
             action: 'connectBot',
@@ -127,20 +130,21 @@ async function setupMainInterface(auth, meetUrl) {
             meetUrl: meetUrl
         }, (response) => {
             if (response && response.success) {
-                updateStatus('Connected ✅', 'green');
-                connectBtn.textContent = 'Connected';
+                updateStatus('Bot Connected ✅', 'success');
+                if (btnText) btnText.textContent = 'CONNECTED';
             } else {
-                updateStatus('Error: ' + (response?.message || 'Failed'), 'red');
+                updateStatus('Error: ' + (response?.message || 'Failed'), 'error');
                 connectBtn.disabled = false;
+                if (btnText) btnText.textContent = 'CONNECT BOT';
             }
         });
     });
 }
 
-function updateStatus(msg, color) {
+function updateStatus(msg, type) {
     const el = document.getElementById('status-display');
     if (el) {
         el.textContent = msg;
-        el.style.color = color || 'black';
+        el.className = 'status ' + (type || '');
     }
 }
